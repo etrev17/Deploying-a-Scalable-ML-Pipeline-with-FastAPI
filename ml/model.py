@@ -21,7 +21,7 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     # TODO: implement the function
-    model = RandomForestClassifier(min_samples_split=30)
+    model = RandomForestClassifier(random_state=0)
     model.fit(X_train,y_train)
     return model
 
@@ -63,7 +63,7 @@ def inference(model, X):
         Predictions from the model.
     """
     # TODO: implement the function
-    pass
+    return model.predict(X)
 
 def save_model(model, path):
     """ Serializes model to a file.
@@ -76,12 +76,14 @@ def save_model(model, path):
         Path to save pickle file.
     """
     # TODO: implement the function
-    pass
+    with open(path, 'wb') as fp: 
+        pickle.dump(model,fp)
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
     # TODO: implement the function
-    pass
+    with open(path, 'rb') as file:
+        return pickle.load(file)
 
 
 def performance_on_categorical_slice(
