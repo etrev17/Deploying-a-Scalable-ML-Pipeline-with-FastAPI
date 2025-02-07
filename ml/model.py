@@ -6,6 +6,8 @@ from sklearn.ensemble import RandomForestClassifier  # Example model, you can ch
 
 
 # TODO: add necessary import
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -82,19 +84,14 @@ def save_model(model, path):
         Path to save pickle file.
     """
     # TODO: implement the function
-    with open(path, 'wb') as f:
-    pickle.dump(model, f)
-    pass
+    with open(path, 'wb') as fp: 
+        pickle.dump(model, fp)
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
     # TODO: implement the function
-    def load_model(path):
-    """ Loads pickle file from `path` and returns it."""
-    with open(path, 'rb') as f:
-        model = pickle.load(f)
-    return model
-    pass
+    with open(path, 'rb') as file:
+        return pickle.load(file)
 
 
 def performance_on_categorical_slice(

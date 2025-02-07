@@ -41,10 +41,10 @@ cat_features = [
 
 # TODO: use the process_data function provided to process the data.
 X_train, y_train, encoder, lb = process_data(
-    train,
-    categorical_fetaures = cat_features,
-    label = "salary",
-    training = True
+    train, 
+    categorical_features=cat_features, 
+    label="salary", 
+    training=True
     )
 
 X_test, y_test, _, _ = process_data(
@@ -71,7 +71,8 @@ model = load_model(
 ) 
 
 # TODO: use the inference function to run the model inferences on the test dataset.
-preds = inference(model, X_test)
+#preds = None # your code here
+preds = inference(model, X_test) 
 
 # Calculate and print the metrics
 p, r, fb = compute_model_metrics(y_test, preds)
@@ -86,14 +87,14 @@ for col in cat_features:
         p, r, fb = performance_on_categorical_slice(
             # your code here
             # use test, col and slicevalue as part of the input
-            data = test,
-            column_name = col,
-            slice_value = slicevalue,
-            categorical_features = cat_features,
-            label = "salary",
-            encoder = encoder,
-            lb = lb,
-            model = model,
+            test,
+            col,
+            slicevalue,
+            cat_features,
+            label="salary",
+            encoder=encoder,
+            lb=lb,
+            model=model
         )
         with open("slice_output.txt", "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file=f)
