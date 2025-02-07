@@ -1,28 +1,45 @@
 import pytest
-# TODO: add necessary import
+import os
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.ensemble import RandomForestClassifier
+from ml.model import train_model, compute_model_metrics
 
-# TODO: implement the first test. Change the function name and input as needed
-def test_one():
+def test_data_split():
     """
-    # add description for the first test
+    Assesses whether the data is properly split into training and testing sets.
     """
-    # Your code here
-    pass
+    project_path = os.getcwd()
+    data_path = os.path.join(project_path, "data", "census.csv")
+    data = pd.read_csv(data_path)
 
+    train, test = train_test_split(data, test_size=0.2, random_state=0)
 
-# TODO: implement the second test. Change the function name and input as needed
-def test_two():
-    """
-    # add description for the second test
-    """
-    # Your code here
-    pass
+    assert not train.empty, "Training dataset is empty."
+    assert not test.empty, "Test dataset is empty."
+    assert len(test) / len(data) == 0.2, "Test dataset size is incorrect."
 
+def test_compute_model_metrics():
+    """
+    Assesses whether compute_model_metrics() correctly calculates
+    precision, recall, and fbeta.
+    """
+    data = np.array([1, 0, 1, 0])
+    preds = np.array([1, 1, 0, 0])
+    precision, recall, fbeta = compute_model_metrics(data, preds)
 
-# TODO: implement the third test. Change the function name and input as needed
-def test_three():
+    assert precision == 1 / 2, f"Precision: {precision:.3f}. Expected: 0.500."
+    assert recall == 1 / 2, f"Recall: {recall:.3f}. Expected: 0.500."
+    assert fbeta == 1 / 2, f"F1: {fbeta:.3f}. Expected: 0.500."
+
+def test_model_algorithm():
     """
-    # add description for the third test
+    Ensures that train_model() returns a RandomForestClassifier.
     """
-    # Your code here
-    pass
+    x = [[1], [2], [3], [4]]
+    y = [1, 0, 1, 0]
+    model = train_model(x, y)
+
+    assert isinstance(model, RandomForestClassifier), "Model is not a RandomForestClassifier."
