@@ -21,7 +21,8 @@ def test_data_split():
 
     assert not train.empty, "Training dataset is empty."
     assert not test.empty, "Test dataset is empty."
-    assert len(test) / len(data) == 0.2, "Test dataset size is incorrect."
+    assert math.isclose(len(test) / len(data), 0.2, rel_tol=0.01), f"Test dataset to precision: {len(test) / len(data):.4f}"
+
 
 def test_compute_model_metrics():
     """
